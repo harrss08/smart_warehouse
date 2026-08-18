@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List Application</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .todo-item {
+      animation: slideIn 0.3s ease-in-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .todo-item.completed .todo-text {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+
+    .checkbox {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #e5e7eb;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .checkbox:hover {
+      border-color: #3b82f6;
+    }
+
+    .checkbox:checked {
+      background-color: #3b82f6;
+      border-color: #3b82f6;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 11-1.06-1.06l7.25-7.25a.75.75 0 011.06 0Z'/%3E%3C/svg%3E");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .priority-high {
+      border-left: 4px solid #ef4444;
+    }
+
+    .priority-medium {
+      border-left: 4px solid #f59e0b;
+    }
+
+    .priority-low {
+      border-left: 4px solid #10b981;
+    }
+
+    .category-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .category-work {
+      background-color: #dbeafe;
+      color: #1e40af;
+    }
+
+    .category-personal {
+      background-color: #fce7f3;
+      color: #be185d;
+    }
+
+    .category-shopping {
+      background-color: #dcfce7;
+      color: #166534;
+    }
+
+    .category-health {
+      background-color: #fef3c7;
+      color: #92400e;
+    }
+
+    .category-other {
+      background-color: #f3e8ff;
+      color: #581c87;
+    }
+
+    .fade-out {
+      animation: fadeOut 0.3s ease-in-out forwards;
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f3f4f6;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #d1d5db;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #9ca3af;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 to-slate-100 min-h-screen">
+
+  <!-- HEADER -->
+  <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40">
+    <div class="max-w-4xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="bg-blue-600 p-2.5 rounded-lg text-white">
+            <i data-lucide="check-square" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900">Task Master</h1>
+            <p class="text-xs text-gray-500 mt-0.5">Stay organized with local storage sync</p>
+          </div>
+        </div>
+        
+        <button onclick="clearAllCompleted()" class="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 font-semibold text-sm rounded-lg transition flex items-center space-x-2" title="Clear completed tasks">
+          <i data-lucide="trash-2" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">Clear Done</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    
+    <!-- INPUT SECTION -->
+    <div class="bg-white rounded-xl shadow-md p-6 mb-8 border border-gray-200">
+      <h2 class="text-lg font-bold text-gray-900 mb-4 flex items-center space-x-2">
+        <i data-lucide="plus-circle" class="w-5 h-5 text-blue-600"></i>
+        <span>Add New Task</span>
+      </h2>
+
+      <div class="space-y-4">
+        <!-- Task Input Row -->
+        <div class="flex flex-col sm:flex-row gap-3">
+          <input 
+            type="text" 
+            id="taskInput" 
+            placeholder="What needs to be done today?" 
+            class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-sm"
+            onkeypress="if(event.key === 'Enter') addTask()"
+          >
+          <button 
+            onclick="addTask()" 
+            class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition flex items-center justify-center space-x-2 w-full sm:w-auto"
+          >
+            <i data-lucide="plus" class="w-5 h-5"></i>
+            <span>Add Task</span>
+          </button>
+        </div>
+
+        <!-- Filter & Sort Options -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label class="text-xs font-semibold text-gray-700 block mb-2">Priority</label>
+            <select 
+              id="priorityFilter" 
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            >
+              <option value="all">All Priorities</option>
+              <option value="high">High Priority</option>
+              <option value="medium">Medium Priority</option>
+              <option value="low">Low Priority</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="text-xs font-semibold text-gray-700 block mb-2">Category</label>
+            <select 
+              id="categoryFilter" 
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            >
+              <option value="all">All Categories</option>
+              <option value="work">Work</option>
+              <option value="personal">Personal</option>
+              <option value="shopping">Shopping</option>
+              <option value="health">Health</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="text-xs font-semibold text-gray-700 block mb-2">Priority Level</label>
+            <select 
+              id="taskPriority" 
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            >
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Category Selection -->
+        <div>
+          <label class="text-xs font-semibold text-gray-700 block mb-2">Category</label>
+          <div class="flex flex-wrap gap-2">
+            <button onclick="setCategory('work')" class="category-work category-btn px-3 py-2 rounded-lg text-sm font-semibold transition hover:shadow-md cursor-pointer" data-category="work">
+              <i data-lucide="briefcase" class="w-4 h-4 inline mr-1"></i> Work
+            </button>
+            <button onclick="setCategory('personal')" class="category-personal category-btn px-3 py-2 rounded-lg text-sm font-semibold transition hover:shadow-md cursor-pointer" data-category="personal">
+              <i data-lucide="user" class="w-4 h-4 inline mr-1"></i> Personal
+            </button>
+            <button onclick="setCategory('shopping')" class="category-shopping category-btn px-3 py-2 rounded-lg text-sm font-semibold transition hover:shadow-md cursor-pointer" data-category="shopping">
+              <i data-lucide="shopping-bag" class="w-4 h-4 inline mr-1"></i> Shopping
+            </button>
+            <button onclick="setCategory('health')" class="category-health category-btn px-3 py-2 rounded-lg text-sm font-semibold transition hover:shadow-md cursor-pointer" data-category="health">
+              <i data-lucide="heart" class="w-4 h-4 inline mr-1"></i> Health
+            </button>
+            <button onclick="setCategory('other')" class="category-other category-btn px-3 py-2 rounded-lg text-sm font-semibold transition hover:shadow-md cursor-pointer" data-category="other">
+              <i data-lucide="tag" class="w-4 h-4 inline mr-1"></i> Other
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS SECTION -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+      <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-200">
+        <div class="text-xs font-semibold text-gray-600 mb-1">Total Tasks</div>
+        <div id="totalTasks" class="text-2xl font-bold text-gray-900">0</div>
+      </div>
+      <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-200">
+        <div class="text-xs font-semibold text-gray-600 mb-1">Completed</div>
+        <div id="completedCount" class="text-2xl font-bold text-green-600">0</div>
+      </div>
+      <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-200">
+        <div class="text-xs font-semibold text-gray-600 mb-1">Pending</div>
+        <div id="pendingCount" class="text-2xl font-bold text-blue-600">0</div>
+      </div>
+      <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-200">
+        <div class="text-xs font-semibold text-gray-600 mb-1">Progress</div>
+        <div id="progressPercentage" class="text-2xl font-bold text-purple-600">0%</div>
+      </div>
+    </div>
+
+    <!-- FILTER STATUS MESSAGE -->
+    <div id="filterMessage" class="mb-4 text-sm text-gray-600 hidden"></div>
+
+    <!-- TASKS LIST SECTION -->
+    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+      <div class="p-6 border-b border-gray-200">
+        <h2 class="text-lg font-bold text-gray-900 flex items-center space-x-2">
+          <i data-lucide="list-todo" class="w-5 h-5 text-blue-600"></i>
+          <span>My Tasks</span>
+          <span id="taskCountBadge" class="ml-auto bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-semibold">0</span>
+        </h2>
+      </div>
+
+      <!-- EMPTY STATE -->
+      <div id="emptyState" class="p-12 text-center">
+        <i data-lucide="inbox" class="w-16 h-16 text-gray-300 mx-auto mb-4"></i>
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">No tasks yet</h3>
+        <p class="text-gray-500 text-sm">Add a task above to get started!</p>
+      </div>
+
+      <!-- TASKS CONTAINER -->
+      <div id="tasksList" class="divide-y divide-gray-200"></div>
+    </div>
+
+    <!-- STORAGE INFO -->
+    <div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg text-xs text-blue-800">
+      <div class="flex items-start space-x-2">
+        <i data-lucide="info" class="w-4 h-4 flex-shrink-0 mt-0.5"></i>
+        <span><strong>💾 Local Storage:</strong> All your tasks are automatically saved to your browser's local storage and will persist even after you close and reopen this page.</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // STORAGE KEYS
+    const STORAGE_KEY = 'todoTasks';
+    const SELECTED_CATEGORY_KEY = 'selectedCategory';
+
+    // STATE
+    let tasks = [];
+    let selectedCategory = 'other';
+
+    // LOAD TASKS FROM LOCAL STORAGE
+    function loadTasks() {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      tasks = stored ? JSON.parse(stored) : [];
+      selectedCategory = localStorage.getItem(SELECTED_CATEGORY_KEY) || 'other';
+      highlightSelectedCategory();
+      renderTasks();
+      updateStats();
+    }
+
+    // SAVE TASKS TO LOCAL STORAGE
+    function saveTasks() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+      localStorage.setItem(SELECTED_CATEGORY_KEY, selectedCategory);
+    }
+
+    // ADD NEW TASK
+    function addTask() {
+      const input = document.getElementById('taskInput');
+      const priority = document.getElementById('taskPriority').value;
+      const taskText = input.value.trim();
+
+      if (taskText === '') {
+        alert('Please enter a task!');
+        input.focus();
+        return;
+      }
+
+      const newTask = {
+        id: Date.now(),
+        text: taskText,
+        completed: false,
+        priority: priority,
+        category: selectedCategory,
+        createdAt: new Date().toLocaleString(),
+        dueDate: ''
+      };
+
+      tasks.push(newTask);
+      saveTasks();
+      renderTasks();
+      updateStats();
+      input.value = '';
+      input.focus();
+
+      // Show success toast
+      showToast(`Task added: "${taskText}"`);
+    }
+
+    // DELETE TASK
+    function deleteTask(id) {
+      tasks = tasks.filter(task => task.id !== id);
+      saveTasks();
+      renderTasks();
+      updateStats();
+      showToast('Task deleted');
+    }
+
+    // TOGGLE TASK COMPLETION
+    function toggleTask(id) {
+      const task = tasks.find(t => t.id === id);
+      if (task) {
+        task.completed = !task.completed;
+        saveTasks();
+        renderTasks();
+        updateStats();
+      }
+    }
+
+    // SET CATEGORY
+    function setCategory(category) {
+      selectedCategory = category;
+      localStorage.setItem(SELECTED_CATEGORY_KEY, selectedCategory);
+      highlightSelectedCategory();
+    }
+
+    // HIGHLIGHT SELECTED CATEGORY BUTTON
+    function highlightSelectedCategory() {
+      document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.style.opacity = btn.getAttribute('data-category') === selectedCategory ? '1' : '0.5';
+      });
+    }
+
+    // RENDER TASKS
+    function renderTasks() {
+      const tasksList = document.getElementById('tasksList');
+      const emptyState = document.getElementById('emptyState');
+      const priorityFilter = document.getElementById('priorityFilter').value;
+      const categoryFilter = document.getElementById('categoryFilter').value;
+      const filterMessage = document.getElementById('filterMessage');
+
+      let filtered = tasks.filter(task => {
+        const priorityMatch = priorityFilter === 'all' || task.priority === priorityFilter;
+        const categoryMatch = categoryFilter === 'all' || task.category === categoryFilter;
+        return priorityMatch && categoryMatch;
+      });
+
+      // Show filter message
+      if (priorityFilter !== 'all' || categoryFilter !== 'all') {
+        filterMessage.textContent = `Showing ${filtered.length} task(s) based on filters`;
+        filterMessage.classList.remove('hidden');
+      } else {
+        filterMessage.classList.add('hidden');
+      }
+
+      document.getElementById('taskCountBadge').textContent = filtered.length;
+
+      if (filtered.length === 0) {
+        emptyState.classList.remove('hidden');
+        tasksList.innerHTML = '';
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      tasksList.innerHTML = filtered.map(task => `
+        <div class="todo-item priority-${task.priority} p-5 hover:bg-gray-50 transition" data-task-id="${task.id}">
+          <div class="flex items-start space-x-4">
+            <!-- CHECKBOX -->
+            <input 
+              type="checkbox" 
+              class="checkbox mt-1 flex-shrink-0"
+              ${task.completed ? 'checked' : ''}
+              onchange="toggleTask(${task.id})"
+            >
+
+            <!-- TASK CONTENT -->
+            <div class="flex-1 min-w-0">
+              <div class="todo-text text-gray-900 font-medium break-words">${escapeHtml(task.text)}</div>
+              <div class="flex flex-wrap items-center gap-2 mt-2">
+                <span class="category-badge category-${task.category}">${capitalize(task.category)}</span>
+                
+                <span class="px-2 py-1 rounded text-xs font-semibold ${
+                  task.priority === 'high' ? 'bg-red-100 text-red-700' :
+                  task.priority === 'medium' ? 'bg-amber-100 text-amber-700' :
+                  'bg-green-100 text-green-700'
+                }">
+                  ${capitalize(task.priority)}
+                </span>
+
+                <span class="text-xs text-gray-500">Added: ${task.createdAt}</span>
+              </div>
+            </div>
+
+            <!-- ACTIONS -->
+            <div class="flex-shrink-0 flex space-x-2">
+              <button 
+                onclick="deleteTask(${task.id})" 
+                class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
+                title="Delete task"
+              >
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // Re-initialize Lucide icons
+      lucide.createIcons();
+    }
+
+    // UPDATE STATISTICS
+    function updateStats() {
+      const total = tasks.length;
+      const completed = tasks.filter(t => t.completed).length;
+      const pending = total - completed;
+      const percentage = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+      document.getElementById('totalTasks').textContent = total;
+      document.getElementById('completedCount').textContent = completed;
+      document.getElementById('pendingCount').textContent = pending;
+      document.getElementById('progressPercentage').textContent = percentage + '%';
+    }
+
+    // CLEAR ALL COMPLETED TASKS
+    function clearAllCompleted() {
+      const completed = tasks.filter(t => t.completed).length;
+      
+      if (completed === 0) {
+        alert('No completed tasks to clear!');
+        return;
+      }
+
+      if (confirm(`Are you sure you want to delete ${completed} completed task(s)?`)) {
+        tasks = tasks.filter(t => !t.completed);
+        saveTasks();
+        renderTasks();
+        updateStats();
+        showToast(`${completed} completed task(s) deleted`);
+      }
+    }
+
+    // ESCAPE HTML
+    function escapeHtml(text) {
+      const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      };
+      return text.replace(/[&<>"']/g, m => map[m]);
+    }
+
+    // CAPITALIZE
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    // SHOW TOAST NOTIFICATION
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'fixed bottom-4 right-4 bg-gray-900 text-white px-6 py-3 rounded-lg shadow-lg text-sm flex items-center space-x-2 animate-pulse z-50';
+      toast.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i><span>${message}</span>`;
+      document.body.appendChild(toast);
+      lucide.createIcons();
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s';
+        setTimeout(() => toast.remove(), 300);
+      }, 2000);
+    }
+
+    // EVENT LISTENERS FOR FILTERS
+    document.getElementById('priorityFilter').addEventListener('change', renderTasks);
+    document.getElementById('categoryFilter').addEventListener('change', renderTasks);
+
+    // INITIALIZE APP
+    document.addEventListener('DOMContentLoaded', () => {
+      loadTasks();
+      lucide.createIcons();
+    });
+  </script>
+
+</body>
+</html>
