@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Warehouse - Complete Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-gradient {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+      border: 1px solid rgba(102, 126, 234, 0.2);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-white to-slate-100">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center space-x-3">
+          <div class="hero-gradient p-2.5 rounded-lg text-white">
+            <i data-lucide="warehouse" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h1 class="text-xl font-bold gradient-text">Smart Warehouse</h1>
+            <p class="text-xs text-slate-500">Complete Portal</p>
+          </div>
+        </div>
+        
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="#features" class="text-sm font-medium text-slate-600 hover:text-slate-900 transition">Features</a>
+          <a href="#apps" class="text-sm font-medium text-slate-600 hover:text-slate-900 transition">Applications</a>
+          <a href="#about" class="text-sm font-medium text-slate-600 hover:text-slate-900 transition">About</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="relative overflow-hidden py-20 sm:py-28">
+    <div class="absolute inset-0 bg-gradient-to-br from-purple-400/10 via-transparent to-blue-400/10 pointer-events-none"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="text-center animate-fade-in">
+        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-6">
+          Complete Warehouse
+          <span class="gradient-text"> Management Suite</span>
+        </h2>
+        
+        <p class="text-lg sm:text-xl text-slate-600 mb-8 max-w-3xl mx-auto">
+          A unified platform combining intelligent inventory management, task tracking, and warehouse operations in one powerful application.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <a href="#apps" class="px-8 py-3.5 hero-gradient text-white font-bold rounded-lg hover:shadow-lg transition transform hover:scale-105">
+            Explore Applications
+          </a>
+          <a href="https://github.com/harrss08/smart_warehouse" target="_blank" class="px-8 py-3.5 bg-slate-200 text-slate-900 font-bold rounded-lg hover:bg-slate-300 transition flex items-center space-x-2">
+            <i data-lucide="github" class="w-5 h-5"></i>
+            <span>View on GitHub</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-16">
+        <div class="stat-card p-6 rounded-lg text-center">
+          <div class="text-3xl font-bold gradient-text mb-2">30+</div>
+          <p class="text-slate-600 font-medium">SKU Products</p>
+        </div>
+        <div class="stat-card p-6 rounded-lg text-center">
+          <div class="text-3xl font-bold gradient-text mb-2">14K+</div>
+          <p class="text-slate-600 font-medium">Total Stock Units</p>
+        </div>
+        <div class="stat-card p-6 rounded-lg text-center">
+          <div class="text-3xl font-bold gradient-text mb-2">5</div>
+          <p class="text-slate-600 font-medium">Product Categories</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPLICATIONS SECTION -->
+  <section id="apps" class="py-20 bg-white/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h3 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">Applications</h3>
+        <p class="text-lg text-slate-600 max-w-2xl mx-auto">Access all integrated applications from one unified portal</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- APP 1: WAREHOUSE DASHBOARD -->
+        <div class="card-hover bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-100 p-8">
+          <div class="hero-gradient w-16 h-16 rounded-lg flex items-center justify-center mb-6">
+            <i data-lucide="layout-dashboard" class="w-8 h-8 text-white"></i>
+          </div>
+          
+          <h3 class="text-2xl font-bold text-slate-900 mb-3">Warehouse Dashboard</h3>
+          <p class="text-slate-600 mb-6 text-sm leading-relaxed">
+            Complete warehouse control center with real-time inventory tracking, smart allocation engine, and operational intelligence.
+          </p>
+
+          <div class="space-y-3 mb-6 text-sm">
+            <div class="flex items-center space-x-2 text-slate-700">
+              <i data-lucide="check" class="w-4 h-4 text-green-600"></i>
+              <span>📊 Dashboard Analytics</span>
+            </div>
+            <div class="flex items-center space-x-2 text-slate-700">
+              <i data-lucide="check" class="w-4 h-4 text-green-600"></i>
+              <span>📦 Inventory Management</span>
+            </div>
+            <div class="flex items-center space-x-2 text-slate-700">
+              <i data-lucide="check" class="w-4 h-4 text-green-600"></i>
+              <span>🗺️ Warehouse Map</span>
+            </div>
+            <div class="flex items-center space-x-2 text-slate-700">
+              <i data-lucide="check" class="w-4 h-4 text-green-600"></i>
+              <span>🔄 Smart Allocation</span>
+            </div>
+            <div class="flex items-center space-x-2 text-slate-700">
+              <i data-lucide="check" class="w-4 h-4 text-green-600"></i>
+              <span>📋 Orders Workflow</span>
+            </div>
+            <div class="flex items-center space-x-2 text-slate-700">
+              <i data-lucide="check" class="w-4 h-4 text-green-600"></i>
+              <span>📝 Audit Ledger</span>
+            </div>
+          </div>
+
+          <a href="https://harrss08.github.io/smart_warehouse/" target="_blank" class="block w-full hero-gradient text-white font-bold py-3 rounded-lg text-center hover:shadow-lg transition">
+            Open Dashboard →
+          </a>
+        </div>
+
+        <!-- APP 2: TO-DO LIST -->
+        <div class="card-hover bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-100 p-8">
+          <div class="bg-gradient-to-br from-blue-500 to-cyan-500 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
+            <i data-lucide="check-square" class="w-8 h-8 text-white"></i>
+          </div>
+          
+          <h3 class="text-2xl font-bold text-slate-900 mb-3">Task Master</h3>
+          <p class="text-slate-600 mb-6 text-sm leading-relaxed">
+            Intelligent task management with priority levels, categories, and automatic local storage sync for persistent task tracking.
+          </p>
+
+          <div class="space-y-3 mb-6 text-sm">
+            <div class="flex items-center space-x-2 text-slate-700">
+              <i data-lucide="check" class="w-4 h-4 text-green-600"></i>
+              <span>✅ Add/Delete Tasks</span>
+            </div>
+            <div class="flex items-center space-x-2 text-slate-700">
+              <i data-lucide="check" class="w-4 h-4 text-green-600"></i>
+              <span>🎯 Priority Levels</span>
+            </div>
+            <div class="flex items-center space-x-2 text-slate-700">
+              <i data-lucide="check" class="w-4 h-4 text-green-600"></i>
+              <span>📁 5 Categories</span>
+            </div>
+            <div class="flex items-center space-x-2 text-slate-700">
+              <i data-lucide="check" class="w-4 h-4 text-green-600"></i>
+              <span>🔍 Filter & Sort</span>
+            </div>
+            <div class="flex items-center space-x-2 text-slate-700">
+              <i data-lucide="check" class="w-4 h-4 text-green-600"></i>
+              <span>💾 Local Storage Sync</span>
+            </div>
+            <div class="flex items-center space-x-2 text-slate-700">
+              <i data-lucide="check" class="w-4 h-4 text-green-600"></i>
+              <span>📊 Progress Tracking</span>
+            </div>
+          </div>
+
+          <a href="https://harrss08.github.io/smart_warehouse/todo-app.html" target="_blank" class="block w-full bg-gradient-to-br from-blue-500 to-cyan-500 text-white font-bold py-3 rounded-lg text-center hover:shadow-lg transition">
+            Open Task Manager →
+          </a>
+        </div>
+
+        <!-- APP 3: COMPLETE PORTAL -->
+        <div class="card-hover bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-100 p-8">
+          <div class="bg-gradient-to-br from-orange-500 to-red-500 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
+            <i data-lucide="globe" class="w-8 h-8 text-white"></i>
+          </div>
+          
+          <h3 class="text-2xl font-bold text-slate-900 mb-3">Complete Portal</h3>
+          <p class="text-slate-600 mb-6 text-sm leading-relaxed">
+            Unified entry point with all applications, documentation, features overview, and seamless navigation between modules.
+          </p>
+
+          <div class="space-y-3 mb-6 text-sm">
+            <div class="flex items-center space-x-2 text-slate-700">
+              <i data-lucide="check" class="w-4 h-4 text-green-600"></i>
+              <span>🏠 Home Portal</span>
+            </div>
+            <div class="flex items-center space-x-2 text-slate-700">
+              <i data-lucide="check" class="w-4 h-4 text-green-600"></i>
+              <span>📚 Documentation</span>
+            </div>
+            <div class="flex items-center space-x-2 text-slate-700">
+              <i data-lucide="check" class="w-4 h-4 text-green-600"></i>
+              <span>🔗 App Links</span>
+            </div>
+            <div class="flex items-center space-x-2 text-slate-700">
+              <i data-lucide="check" class="w-4 h-4 text-green-600"></i>
+              <span>⚙️ Configuration</span>
+            </div>
+            <div class="flex items-center space-x-2 text-slate-700">
+              <i data-lucide="check" class="w-4 h-4 text-green-600"></i>
+              <span>📱 Responsive Design</span>
+            </div>
+            <div class="flex items-center space-x-2 text-slate-700">
+              <i data-lucide="check" class="w-4 h-4 text-green-600"></i>
+              <span>🌐 Browser Compatible</span>
+            </div>
+          </div>
+
+          <a href="https://harrss08.github.io/smart_warehouse/portal.html" target="_blank" class="block w-full bg-gradient-to-br from-orange-500 to-red-500 text-white font-bold py-3 rounded-lg text-center hover:shadow-lg transition">
+            Visit Portal →
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES SECTION -->
+  <section id="features" class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h3 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">Features</h3>
+        <p class="text-lg text-slate-600 max-w-2xl mx-auto">Comprehensive tools for modern warehouse management</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <div class="p-6 bg-white rounded-xl border border-slate-200 hover:border-purple-300 transition">
+          <div class="feature-icon bg-blue-100 text-blue-600 mb-4">📦</div>
+          <h4 class="text-lg font-bold text-slate-900 mb-2">Smart Inventory</h4>
+          <p class="text-slate-600 text-sm">Real-time stock tracking across 30+ products with intelligent allocation algorithms</p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl border border-slate-200 hover:border-purple-300 transition">
+          <div class="feature-icon bg-green-100 text-green-600 mb-4">🗺️</div>
+          <h4 class="text-lg font-bold text-slate-900 mb-2">Visual Warehouse Map</h4>
+          <p class="text-slate-600 text-sm">Interactive floor map with rack-level drilldown and bin location tracking</p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl border border-slate-200 hover:border-purple-300 transition">
+          <div class="feature-icon bg-purple-100 text-purple-600 mb-4">🔄</div>
+          <h4 class="text-lg font-bold text-slate-900 mb-2">Conflict Resolution</h4>
+          <p class="text-slate-600 text-sm">AI-powered decision engine for competing order allocation scenarios</p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl border border-slate-200 hover:border-purple-300 transition">
+          <div class="feature-icon bg-orange-100 text-orange-600 mb-4">📋</div>
+          <h4 class="text-lg font-bold text-slate-900 mb-2">Orders Workflow</h4>
+          <p class="text-slate-600 text-sm">Complete fulfillment lifecycle tracking from creation to dispatch</p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl border border-slate-200 hover:border-purple-300 transition">
+          <div class="feature-icon bg-red-100 text-red-600 mb-4">⚠️</div>
+          <h4 class="text-lg font-bold text-slate-900 mb-2">Exception Management</h4>
+          <p class="text-slate-600 text-sm">Automated alerts for stock anomalies, damages, and discrepancies</p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl border border-slate-200 hover:border-purple-300 transition">
+          <div class="feature-icon bg-cyan-100 text-cyan-600 mb-4">📊</div>
+          <h4 class="text-lg font-bold text-slate-900 mb-2">Analytics Dashboard</h4>
+          <p class="text-slate-600 text-sm">Real-time KPIs, operational metrics, and performance insights</p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl border border-slate-200 hover:border-purple-300 transition">
+          <div class="feature-icon bg-indigo-100 text-indigo-600 mb-4">💾</div>
+          <h4 class="text-lg font-bold text-slate-900 mb-2">Local Storage Persistence</h4>
+          <p class="text-slate-600 text-sm">Automatic data synchronization across all applications</p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl border border-slate-200 hover:border-purple-300 transition">
+          <div class="feature-icon bg-pink-100 text-pink-600 mb-4">✅</div>
+          <h4 class="text-lg font-bold text-slate-900 mb-2">Task Management</h4>
+          <p class="text-slate-600 text-sm">Intelligent task tracking with priorities and category management</p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl border border-slate-200 hover:border-purple-300 transition">
+          <div class="feature-icon bg-teal-100 text-teal-600 mb-4">📱</div>
+          <h4 class="text-lg font-bold text-slate-900 mb-2">Fully Responsive</h4>
+          <p class="text-slate-600 text-sm">Optimized for desktop, tablet, and mobile devices</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK LINKS SECTION -->
+  <section id="about" class="py-20 bg-white/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h3 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">Quick Links</h3>
+        <p class="text-lg text-slate-600 max-w-2xl mx-auto">Direct access to all components</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <a href="https://harrss08.github.io/smart_warehouse/" target="_blank" class="p-6 bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl border border-purple-200 hover:border-purple-400 transition group">
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="text-lg font-bold text-slate-900">Smart Warehouse Dashboard</h4>
+            <i data-lucide="external-link" class="w-5 h-5 text-purple-600 group-hover:translate-x-1 transition"></i>
+          </div>
+          <p class="text-slate-600 text-sm mb-4">Complete warehouse management system with inventory, orders, and analytics</p>
+          <code class="text-xs bg-white px-3 py-2 rounded text-purple-600 font-mono">index.html</code>
+        </a>
+
+        <a href="https://harrss08.github.io/smart_warehouse/todo-app.html" target="_blank" class="p-6 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl border border-blue-200 hover:border-blue-400 transition group">
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="text-lg font-bold text-slate-900">Task Manager (To-Do List)</h4>
+            <i data-lucide="external-link" class="w-5 h-5 text-blue-600 group-hover:translate-x-1 transition"></i>
+          </div>
+          <p class="text-slate-600 text-sm mb-4">Task tracking with priorities, categories, and local storage persistence</p>
+          <code class="text-xs bg-white px-3 py-2 rounded text-blue-600 font-mono">todo-app.html</code>
+        </a>
+
+        <a href="https://github.com/harrss08/smart_warehouse" target="_blank" class="p-6 bg-gradient-to-br from-slate-50 to-gray-50 rounded-xl border border-gray-300 hover:border-gray-400 transition group">
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="text-lg font-bold text-slate-900">GitHub Repository</h4>
+            <i data-lucide="external-link" class="w-5 h-5 text-slate-600 group-hover:translate-x-1 transition"></i>
+          </div>
+          <p class="text-slate-600 text-sm mb-4">Source code and documentation for the complete Smart Warehouse project</p>
+          <code class="text-xs bg-white px-3 py-2 rounded text-slate-600 font-mono">harrss08/smart_warehouse</code>
+        </a>
+
+        <a href="https://harrss08.github.io/smart_warehouse/portal.html" target="_blank" class="p-6 bg-gradient-to-br from-orange-50 to-red-50 rounded-xl border border-orange-200 hover:border-orange-400 transition group">
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="text-lg font-bold text-slate-900">Complete Portal</h4>
+            <i data-lucide="external-link" class="w-5 h-5 text-orange-600 group-hover:translate-x-1 transition"></i>
+          </div>
+          <p class="text-slate-600 text-sm mb-4">Unified entry point for all applications and features</p>
+          <code class="text-xs bg-white px-3 py-2 rounded text-orange-600 font-mono">portal.html</code>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH STACK SECTION -->
+  <section class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h3 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">Technology Stack</h3>
+        <p class="text-lg text-slate-600 max-w-2xl mx-auto">Built with modern web technologies</p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        
+        <div class="p-6 bg-white rounded-xl border border-slate-200 text-center hover:shadow-lg transition">
+          <div class="text-4xl mb-3">🎨</div>
+          <h4 class="font-bold text-slate-900">Tailwind CSS</h4>
+          <p class="text-xs text-slate-600 mt-2">Responsive Design</p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl border border-slate-200 text-center hover:shadow-lg transition">
+          <div class="text-4xl mb-3">✨</div>
+          <h4 class="font-bold text-slate-900">Lucide Icons</h4>
+          <p class="text-xs text-slate-600 mt-2">Beautiful Icons</p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl border border-slate-200 text-center hover:shadow-lg transition">
+          <div class="text-4xl mb-3">💾</div>
+          <h4 class="font-bold text-slate-900">Local Storage</h4>
+          <p class="text-xs text-slate-600 mt-2">Data Persistence</p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl border border-slate-200 text-center hover:shadow-lg transition">
+          <div class="text-4xl mb-3">📊</div>
+          <h4 class="font-bold text-slate-900">Chart.js</h4>
+          <p class="text-xs text-slate-600 mt-2">Analytics Graphs</p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl border border-slate-200 text-center hover:shadow-lg transition">
+          <div class="text-4xl mb-3">🔧</div>
+          <h4 class="font-bold text-slate-900">Vanilla JS</h4>
+          <p class="text-xs text-slate-600 mt-2">Core Logic</p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl border border-slate-200 text-center hover:shadow-lg transition">
+          <div class="text-4xl mb-3">📱</div>
+          <h4 class="font-bold text-slate-900">Responsive</h4>
+          <p class="text-xs text-slate-600 mt-2">All Devices</p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl border border-slate-200 text-center hover:shadow-lg transition">
+          <div class="text-4xl mb-3">🚀</div>
+          <h4 class="font-bold text-slate-900">GitHub Pages</h4>
+          <p class="text-xs text-slate-600 mt-2">Fast Hosting</p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl border border-slate-200 text-center hover:shadow-lg transition">
+          <div class="text-4xl mb-3">🌐</div>
+          <h4 class="font-bold text-slate-900">HTML5</h4>
+          <p class="text-xs text-slate-600 mt-2">Web Standard</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA SECTION -->
+  <section class="py-20 bg-gradient-to-br from-purple-600 via-purple-500 to-pink-500">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h3 class="text-4xl sm:text-5xl font-bold text-white mb-6">Ready to Get Started?</h3>
+      <p class="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
+        Explore the complete Smart Warehouse suite and optimize your warehouse operations today.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <a href="https://harrss08.github.io/smart_warehouse/" target="_blank" class="px-8 py-3.5 bg-white text-purple-600 font-bold rounded-lg hover:bg-slate-100 transition transform hover:scale-105">
+          Open Dashboard
+        </a>
+        <a href="https://github.com/harrss08/smart_warehouse" target="_blank" class="px-8 py-3.5 bg-white/20 border-2 border-white text-white font-bold rounded-lg hover:bg-white/30 transition flex items-center space-x-2">
+          <i data-lucide="github" class="w-5 h-5"></i>
+          <span>Star on GitHub</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-slate-300 py-8 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="text-center md:text-left mb-6 md:mb-0">
+          <p class="font-semibold text-white mb-1">Smart Warehouse Portal</p>
+          <p class="text-sm text-slate-400">Complete warehouse management solution</p>
+        </div>
+
+        <div class="flex items-center space-x-6 text-sm">
+          <a href="https://github.com/harrss08/smart_warehouse" target="_blank" class="hover:text-white transition flex items-center space-x-2">
+            <i data-lucide="github" class="w-4 h-4"></i>
+            <span>GitHub</span>
+          </a>
+          <a href="#features" class="hover:text-white transition">Features</a>
+          <a href="#apps" class="hover:text-white transition">Apps</a>
+        </div>
+      </div>
+
+      <div class="border-t border-slate-800 mt-8 pt-8 text-center text-sm text-slate-400">
+        <p>© 2024 Smart Warehouse. Built with ❤️ by <a href="https://github.com/harrss08" target="_blank" class="text-purple-400 hover:text-purple-300 transition">harrss08</a></p>
+        <p class="mt-2">All data is stored locally in your browser. No servers or cloud storage required.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
